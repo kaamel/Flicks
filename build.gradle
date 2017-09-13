@@ -1,0 +1,16 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        //the following repository is needed for the picaso snapshot
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    }
+}
