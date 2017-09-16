@@ -15,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by kaamel on 9/11/17.
@@ -48,7 +49,10 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public int getItemViewType(int position) {
-        return getItem(position).getVoteAverage()>=5?1:0;
+        if (getItem(position).getBackdropPath() == null)
+            return 0;
+        //on the scale of 0-5 a movie is populbar if it is rated 4.5 or higher
+        return isPopular(position)?1:0;
     }
 
     @Override
@@ -59,7 +63,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(getItemViewType(position) == 1?R.layout.item_type1: R.layout.item_type2, parent, false);
+            convertView = inflate(inflater, position, parent);
             viewHolder = new ViewHolder(convertView);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
@@ -75,19 +79,32 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         if (viewHolder.overview != null)
             viewHolder.overview.setText(movie.getOverview());
         if (viewHolder.backdropImage != null) {
-            Picasso.with(getContext()).load(movie.getBackdropPath()).fit().centerInside()
-                    .placeholder(R.drawable.movie_backdrop)
-                    .error(android.R.drawable.stat_notify_error)
-                    .into(viewHolder.backdropImage);
+            Picasso.with(getContext())
+                .load(movie.getBackdropPath())
+                .fit().centerInside()
+                .placeholder(R.drawable.movie_backdrop).transform(new RoundedCornersTransformation(15, 5))
+                .error(R.drawable.error)
+                .into(viewHolder.backdropImage);
+
         }
         else {
-            Picasso.with(getContext()).load(movie.getPosterPath()).fit().centerCrop()
-                    .placeholder(R.drawable.movie_poster)
+            Picasso.with(getContext())
+                    .load(movie.getPosterPath())
+                    .fit().centerInside()
+                    .placeholder(R.drawable.movie_poster).transform(new RoundedCornersTransformation(15, 5))
                     .error(android.R.drawable.stat_notify_error)
                     .into(viewHolder.posterImage);
         }
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    private View inflate(LayoutInflater inflater, int position, ViewGroup parent) {
+        return inflater.inflate(getItemViewType(position) == 0?R.layout.item_type1: R.layout.item_type2, parent, false);
+    }
+
+    private boolean isPopular(int position) {
+        return getItem(position).getVoteAverage()>=3.5;
     }
 
 }

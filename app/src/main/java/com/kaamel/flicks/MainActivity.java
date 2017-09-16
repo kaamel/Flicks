@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.kaamel.flicks.RemoteMovieConnection.movies;
 
 public class MainActivity extends Activity {
 
@@ -29,13 +30,14 @@ public class MainActivity extends Activity {
 	}
 
 	private List<Movie> getMovies() {
-		List<Movie> movies = new ArrayList<>();
-		MovieDatabaseConnection.downloadAllMovies(movies, new MovieDatabaseConnection.OnMovieListChanged() {
+		new MovieDatabaseConnection(new MovieDatabaseConnection.OnMovieListChanged() {
 			@Override
-			public void onChange() {
+			public void onChange(final List<Movie> ms) {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
+//						movies.clear();
+//						movies.addAll(ms);
 						adapter.notifyDataSetChanged();
 					}
 				});

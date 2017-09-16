@@ -24,4 +24,6 @@ dependencies {
     //Need to use the unreleased picasso 2.6 for compatibility with okhttp3
     //compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.picasso:picasso:2.6.0-SNAPSHOT'
+    //round corners
+    compile 'jp.wasabeef:picasso-transformations:2.1.2'
 }
