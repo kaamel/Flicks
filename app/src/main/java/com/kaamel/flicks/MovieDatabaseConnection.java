@@ -40,7 +40,7 @@ public class MovieDatabaseConnection extends RemoteMovieConnection {
         super(onMovieListChanged);
     }
 
-    public void downloadAllMovies() {
+    private void downloadAllMovies() {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -51,12 +51,14 @@ public class MovieDatabaseConnection extends RemoteMovieConnection {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                inProgress = false;
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 if (!response.isSuccessful()) {
+                    inProgress = false;
                     throw new IOException("Unexpected code " + response);
                 }
                 try {
@@ -67,26 +69,27 @@ public class MovieDatabaseConnection extends RemoteMovieConnection {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                inProgress = false;
             }
         });
     }
 
-    private static void extractMovies(String message) throws JSONException {
+    private void extractMovies(String message) throws JSONException {
         JSONObject jList = new JSONObject(message);
 
         JSONArray jMovies = jList.getJSONArray(RESULTS);
         int n = jMovies.length();
         for (int i=0; i<n; i++) {
             JSONObject jMovie = jMovies.getJSONObject(i);
-            Movie movie = getMovie(jMovie);
+            Movie movie = extractMovie(jMovie);
             movies.add(movie);
         }
     }
 
-    private static Movie getMovie(@NonNull JSONObject movie) throws JSONException, NullPointerException {
+    private Movie extractMovie(@NonNull JSONObject movie) throws JSONException, NullPointerException {
         int id = movie.getInt(ID);
         int voteCount = movie.getInt(VOTE_COUNT);
-        double voteAverage = ((movie.getDouble(VOTE_AVERAGE) - 0.5)/9.5) * 5; //0 to 5 scale
+        double voteAverage = scaleRating(movie.getDouble(VOTE_AVERAGE));
         String title = movie.getString(TITLE);
         double popularity = movie.getDouble(POPULARITY);
         String posterPath = BASE_IMAGE_URL + movie.getString(POSTER_PATH);
@@ -96,9 +99,18 @@ public class MovieDatabaseConnection extends RemoteMovieConnection {
         return new Movie(id, voteCount, voteAverage, title, popularity, posterPath, backdropPath, overview, releaseDate);
     }
 
+    private double scaleRating(double raw) {
+        double newMin = 0;
+        double newMax = 5;
+        return super.scaleRating(raw, 0.5, 10.0, newMin, newMax);
+    }
+
     @Override
-    public void refreshMovies() {
-        movies = new ArrayList<>();
-        downloadAllMovies();
+    public synchronized void refreshMovies() {
+        if (!inProgress) {
+            inProgress = true;
+            movies = new ArrayList<>();
+            downloadAllMovies();
+        }
     }
 }

@@ -2,52 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/s_item_item"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
-    android:id="@+id/normal_item"
     android:background="@android:drawable/dialog_holo_light_frame"
-    android:orientation="horizontal"
-    android:weightSum="7">
+    android:orientation="horizontal">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4">
-
-        <ImageView
-            android:id="@+id/posterImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:padding="5dp"
-            android:scaleType="fitStart"
-            android:src="@drawable/movie_poster" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:text="Title"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/overview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Overiew" />
-    </LinearLayout>
+    <include layout="@layout/item_backdrop" />
 
 </LinearLayout>

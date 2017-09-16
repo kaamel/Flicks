@@ -52,7 +52,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         if (getItem(position).getBackdropPath() == null)
             return 0;
         //on the scale of 0-5 a movie is populbar if it is rated 4.5 or higher
-        return isPopular(position)?1:0;
+        return getItem(position).isPopular()?1:0;
     }
 
     @Override
@@ -100,11 +100,6 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     }
 
     private View inflate(LayoutInflater inflater, int position, ViewGroup parent) {
-        return inflater.inflate(getItemViewType(position) == 0?R.layout.item_type1: R.layout.item_type2, parent, false);
+        return inflater.inflate(getItemViewType(position) == 0?R.layout.item_type0: R.layout.item_type1, parent, false);
     }
-
-    private boolean isPopular(int position) {
-        return getItem(position).getVoteAverage()>=3.5;
-    }
-
 }
