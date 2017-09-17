@@ -47,15 +47,17 @@ public class DetailsActivity extends Activity {
                 .error(R.drawable.error)
                 .into(movieImage);
         title.setText(movie.getTitle());
-        ratingBar.setRating((float) movie.getVoteAverage()/2);
+        ratingBar.setRating((float) movie.getVoteAverage());
         releaseDate.setText("Release Date " + movie.getReleaseDate());
         summary.setText(movie.getOverview());
+        setTitle(movie.getTitle());
     }
 
     public void playVideo(View view) {
         //Play movie
         Intent intent = new Intent(this, PlayVideoActivity.class);
         intent.putExtra("position", position);
+        intent.putExtra("force_fullscreen",true);
         startActivity(intent);
     }
 }

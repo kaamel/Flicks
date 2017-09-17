@@ -12,12 +12,11 @@ public class Movie {
     private String title;
     private double popularity;
     private String posterPath;
-    private String language;
     private String backdropPath;
     private String overview;
     private String releaseDate;
 
-    private static double popThreshold = 3.5;
+    private static double popThreshold = 3.6;
 
     public Movie(int id, int voteCount, double voteAverage, String title, double popularity, String posterPath, String backdropPath,
                  String overview, String releaseDate) {
@@ -45,16 +44,6 @@ public class Movie {
         return popThreshold;
     }
 
-
-    /**
-     *
-     * @return a int between the star ratings by 0.5 star increments, min of 1 and max of 10
-     */
-    public int getStarrating() {
-
-        return (getVoteCount() * 2 + 1) / 10;
-    }
-
     public int getId() {
         return id;
     }
@@ -77,10 +66,6 @@ public class Movie {
 
     public String getPosterPath() {
         return posterPath;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 
     public String getBackdropPath() {

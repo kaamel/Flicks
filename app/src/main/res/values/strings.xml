@@ -3,5 +3,6 @@
 
     <string name="app_name">Flicks</string>
     <string name="menu_settings">Settings</string>
+    <string name="now_showing">Now Showing</string>
 
 </resources>

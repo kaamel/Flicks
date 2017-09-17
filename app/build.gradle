@@ -30,6 +30,3 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support:design:26.+'
 }
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
