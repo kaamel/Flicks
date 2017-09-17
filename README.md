@@ -53,6 +53,12 @@ Here's a walkthrough of implemented user stories:
 
 <img src='http://i.imgur.com/MKJHsE4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+- I am having issues with imgur file - I can see it in a browser but when I included as described here
+it does not show directly here. While trying to figure out what I am doing wrong, here is the direct link to
+the video gif
+
+[videoLink](http://i.imgur.com/MKJHsE4.gif)
+
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
