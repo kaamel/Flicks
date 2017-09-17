@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		setTitle(R.string.now_showing);
 	}
 
 	@Override

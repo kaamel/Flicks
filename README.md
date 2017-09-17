@@ -2,7 +2,7 @@
 
 **Name of your app** shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **7** hours spent in total
+Time spent: **15** hours spent in total
 
 ## User Stories
 
@@ -32,13 +32,26 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] List anything else that you can get done to improve the app functionality!
+
+- A progress bar is shown while the movies list are downloaded
+- If no trailers are available a Toast message inidicates it
+- When showing a video, it checks the screen resolution and finds the best matched trailer
+where more than one videos is available.
+- The list of currently showing movies are maintained and are not downloaded again for the life of the application
+- The list of trailers/videos for any movie is downloaded ondemand, but then not downloaded again
+for the life of the application
+- The connection and decoding of the movies are through an abstract class that can be
+extended for other service providers.
+- Movie ratings are normalized to a 0-5 range and starts are displayed based 0.5 steps.
+For the purpose of this assignment a movie is considered popular if the normalized rating
+is 3.6 or higher. This is done to assure some movies are popular!
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/MKJHsE4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
