@@ -38,6 +38,34 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         }
     }
 
+    static class ViewHolderType0 {
+        @Nullable
+        @BindView(R.id.title) TextView title;
+        @Nullable
+        @BindView(R.id.overview) TextView overview;
+        @Nullable
+        @BindView(R.id.posterImage) ImageView posterImage;
+        @Nullable
+        @BindView(R.id.backdropImage) ImageView backdropImage;
+
+        public ViewHolderType0(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    static class ViewHolderType1 {
+        @Nullable
+        @BindView(R.id.title) TextView title;
+        @Nullable
+        @BindView(R.id.overview) TextView overview;
+        @Nullable
+        @BindView(R.id.backdropImage) ImageView backdropImage;
+
+        public ViewHolderType1(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
+
     public MoviesAdapter(Context context, List<Movie> movies) {
         super(context, R.layout.item_type1, movies);
     }
@@ -59,17 +87,23 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Movie movie = getItem(position);
+        if (movie.isPopular())
+            return  getViewType1(movie, convertView, parent);
+        return getViewType0(movie, convertView, parent);
+    }
+
+    private View getViewType0(Movie movie, View convertView, ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
+        ViewHolderType0 viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflate(inflater, position, parent);
-            viewHolder = new ViewHolder(convertView);
+            convertView = inflater.inflate(R.layout.item_type0, parent, false);
+            viewHolder = new ViewHolderType0(convertView);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
             // View is being recycled, retrieve the viewHolder object from tag
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolderType0) convertView.getTag();
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
@@ -78,28 +112,54 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             viewHolder.title.setText(movie.getTitle());
         if (viewHolder.overview != null)
             viewHolder.overview.setText(movie.getOverview());
-        if (viewHolder.backdropImage != null) {
+        if (viewHolder.posterImage != null)
             Picasso.with(getContext())
-                .load(movie.getBackdropPath())
-                .fit().centerInside()
-                .placeholder(R.drawable.movie_backdrop).transform(new RoundedCornersTransformation(15, 5))
-                .error(R.drawable.error)
-                .into(viewHolder.backdropImage);
-
-        }
+                        .load(movie.getPosterPath())
+                        .fit().centerInside()
+                        .placeholder(R.drawable.movie_poster).transform(new RoundedCornersTransformation(15, 5))
+                        .error(android.R.drawable.stat_notify_error)
+                        .into(viewHolder.posterImage);
         else {
             Picasso.with(getContext())
-                    .load(movie.getPosterPath())
+                    .load(movie.getBackdropPath())
                     .fit().centerInside()
                     .placeholder(R.drawable.movie_poster).transform(new RoundedCornersTransformation(15, 5))
                     .error(android.R.drawable.stat_notify_error)
-                    .into(viewHolder.posterImage);
+                    .into(viewHolder.backdropImage);
         }
+
         // Return the completed view to render on screen
         return convertView;
     }
 
-    private View inflate(LayoutInflater inflater, int position, ViewGroup parent) {
-        return inflater.inflate(getItemViewType(position) == 0?R.layout.item_type0: R.layout.item_type1, parent, false);
+    private View getViewType1(Movie movie, View convertView, ViewGroup parent) {
+        // Check if an existing view is being reused, otherwise inflate the view
+        ViewHolderType1 viewHolder; // view lookup cache stored in tag
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.item_type1, parent, false);
+            viewHolder = new ViewHolderType1(convertView);
+            // Cache the viewHolder object inside the fresh view
+            convertView.setTag(viewHolder);
+        } else {
+            // View is being recycled, retrieve the viewHolder object from tag
+            viewHolder = (ViewHolderType1) convertView.getTag();
+        }
+        // Populate the data from the data object via the viewHolder object
+        // into the template view.
+        assert movie != null;
+        if (viewHolder.title != null)
+            viewHolder.title.setText(movie.getTitle());
+        if (viewHolder.overview != null)
+            viewHolder.overview.setText(movie.getOverview());
+        Picasso.with(getContext())
+                .load(movie.getBackdropPath())
+                .fit().centerInside()
+                .placeholder(R.drawable.movie_poster).transform(new RoundedCornersTransformation(15, 5))
+                .error(android.R.drawable.stat_notify_error)
+                .into(viewHolder.backdropImage);
+
+        // Return the completed view to render on screen
+        return convertView;
     }
 }
