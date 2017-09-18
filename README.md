@@ -2,7 +2,7 @@
 
 **Flicks** shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **15** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -51,13 +51,13 @@ is 3.6 or higher. This is done to assure some movies are popular!
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/MKJHsE4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/fXVMSSf.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' /> <img src='http://i.imgur.com/FyhkNCU.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' /> <img src='http://i.imgur.com/sqqmexV.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-- I am having issues with imgur file - I can see it in a browser but when I included as described here
-it does not show directly here. While trying to figure out what I am doing wrong, here is the direct link to
-the video gif
+- I had to shorten the lenght of the videos so it is borken into 3 parts. Here are the 3 direct links:
+[Imgur](https://i.imgur.com/fXVMSSf.gifv)
+[Imgur](https://i.imgur.com/FyhkNCU.gifv)
+[Imgur](https://i.imgur.com/sqqmexV.gifv)
 
-[videoLink](http://i.imgur.com/MKJHsE4.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

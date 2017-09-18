@@ -15,7 +15,7 @@
         android:layout_weight="4">
 
         <ImageView
-            android:id="@+id/posterImage"
+            android:id="@+id/backdropImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
